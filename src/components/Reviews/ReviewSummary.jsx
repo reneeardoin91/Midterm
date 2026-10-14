@@ -1,5 +1,5 @@
-// Import the Gemini model and Google AI plugin used to generate the summary.
-import { gemini20Flash, googleAI } from "@genkit-ai/googleai";
+// Import the Google AI plugin used to generate the summary.
+import { googleAI } from "@genkit-ai/google-genai";
 // Import Genkit's function for configuring an AI generation instance.
 import { genkit } from "genkit";
 // Import the Firestore helper that retrieves a restaurant's reviews.
@@ -43,7 +43,7 @@ export async function GeminiSummary({ restaurantId }) {
     // Configure a Genkit instance.
     const ai = genkit({
       plugins: [googleAI()],
-      model: gemini20Flash, // set default model
+      model: googleAI.model("gemini-2.5-flash"),
     });
     // Generate the summary text from the prepared prompt.
     const { text } = await ai.generate(prompt);
