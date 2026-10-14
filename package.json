@@ -14,7 +14,7 @@
   "dependencies": {
     "@genkit-ai/ai": "^0.5.17",
     "@genkit-ai/core": "^1.42.0",
-    "@genkit-ai/googleai": "^0.5.17",
+    "@genkit-ai/google-genai": "^1.42.0",
     "cookies-next": "^5.1.0",
     "firebase": "^9.14.0",
     "firebase-tools": "^15.33.0",
