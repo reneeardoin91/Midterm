@@ -13,8 +13,9 @@ import {
   GeminiSummarySkeleton,
 } from "@/src/components/Reviews/ReviewSummary";
 import { getFirestore } from "firebase/firestore";
+import { notFound } from "next/navigation";
 
-export default async function Home(props) {
+export default async function BookPage(props) {
   // This is a server component, we can access URL
   // parameters via Next.js and download the data
   // we need for this page
@@ -25,6 +26,9 @@ export default async function Home(props) {
     getFirestore(firebaseServerApp),
     params.id
   );
+  if (!restaurant || restaurant.type !== "book") {
+    notFound();
+  }
 
   return (
     <main className="main__restaurant">

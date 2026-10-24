@@ -290,9 +290,8 @@ a {
 }
 
 .restaurant__review_summary {
-  max-width: "50vw";
-  height: "75px";
-  padding-top: "10px";
+  max-width: 50vw;
+  padding-top: 10px;
 }
 
 .img__section {
@@ -579,5 +578,405 @@ a {
     outline: none;
     border: none;
     font-size: 0.8rem;
+  }
+}
+
+body {
+  color: #f5eee2;
+  background: #11120f;
+}
+
+header {
+  background: #171a17;
+  border-bottom: 1px solid #343a31;
+  padding: 0.8rem max(1.25rem, calc((100vw - 1240px) / 2));
+}
+
+.logo {
+  gap: 0.7rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.logo__mark {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #c18442;
+  border-radius: 50%;
+  color: #f0c17f;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.main__home,
+.main__restaurant {
+  min-height: 100vh;
+  color: #f5eee2;
+  background: #11120f;
+}
+
+.home-hero {
+  padding: clamp(3rem, 8vw, 7rem) 1.5rem 4rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgb(164 99 39 / 20%), transparent 60%),
+    linear-gradient(180deg, #1b211d, #11120f);
+}
+
+.home-hero__eyebrow,
+.catalog-heading__eyebrow,
+.book-details__eyebrow {
+  color: #e2ad6a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.home-hero h1 {
+  margin: 0.8rem 0;
+  color: #fff7e9;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+  line-height: 1.05;
+}
+
+.home-hero > p:last-child {
+  max-width: 42rem;
+  margin: 0 auto;
+  color: #c6c1b6;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+article {
+  width: min(100% - 2.5rem, 1240px);
+  padding: 2.5rem 0 5rem;
+  background: transparent;
+}
+
+.catalog-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.catalog-heading h2 {
+  margin-top: 0.4rem;
+  color: #fff7e9;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+}
+
+.catalog-heading > p {
+  color: #aaa99f;
+}
+
+.restaurants {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.restaurants > li {
+  overflow: hidden;
+  max-width: none;
+  border: 1px solid #30352f;
+  border-radius: 0.6rem;
+  background: #1b1e1a;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+
+.restaurants > li:hover {
+  transform: translateY(-4px);
+  border-color: #bd8145;
+}
+
+.restaurants a {
+  color: #f5eee2;
+}
+
+.book-cover {
+  height: 320px;
+  overflow: hidden;
+  background: #242b27;
+}
+
+.book-cover > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-cover__art {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 1.25rem;
+  color: #fff3df;
+  background:
+    radial-gradient(ellipse at 70% 55%, rgb(239 165 73 / 37%), transparent 36%),
+    linear-gradient(145deg, #242b27 10%, #523b2c 52%, #171916);
+  isolation: isolate;
+}
+
+.book-cover__art::before,
+.detail-cover::before {
+  position: absolute;
+  z-index: -1;
+  top: 14%;
+  left: 50%;
+  width: 13rem;
+  height: 13rem;
+  border: 1px solid rgb(240 193 127 / 40%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1.5rem rgb(240 193 127 / 7%),
+    0 0 0 3rem rgb(240 193 127 / 5%);
+  content: "";
+  transform: translateX(-50%);
+}
+
+.book-cover--2 .book-cover__art,
+.detail-cover--2 {
+  background: linear-gradient(145deg, #382a23, #754631 55%, #191916);
+}
+
+.book-cover--3 .book-cover__art,
+.detail-cover--3 {
+  background: linear-gradient(145deg, #21282a, #31505a 55%, #171916);
+}
+
+.book-cover--4 .book-cover__art,
+.detail-cover--4 {
+  background: linear-gradient(145deg, #282338, #4e3d63 55%, #171916);
+}
+
+.book-cover--5 .book-cover__art,
+.detail-cover--5 {
+  background: linear-gradient(145deg, #34241f, #8b442d 55%, #171916);
+}
+
+.book-cover--6 .book-cover__art,
+.detail-cover--6 {
+  background: linear-gradient(145deg, #292a20, #5c633c 55%, #171916);
+}
+
+.book-cover--7 .book-cover__art,
+.detail-cover--7 {
+  background: linear-gradient(145deg, #28202a, #653d54 55%, #171916);
+}
+
+.book-cover--8 .book-cover__art,
+.detail-cover--8 {
+  background: linear-gradient(145deg, #22282a, #3b5e5d 55%, #171916);
+}
+
+.book-cover__series {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.book-cover__number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: rgb(255 242 219 / 13%);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10rem;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+}
+
+.book-cover__title {
+  max-width: 15rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 50%);
+}
+
+.book-cover__author {
+  margin-top: 0.4rem;
+  color: #e5c59c;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.restaurant__details {
+  padding: 1.1rem 1.2rem 1.3rem;
+}
+
+.restaurant__details h2 {
+  min-height: 2.8em;
+  color: #fff7e9;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.book-details__eyebrow {
+  margin-bottom: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+}
+
+.restaurant__rating {
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.restaurant__rating svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: #e8ad61;
+}
+
+.restaurant__rating span {
+  color: #aaa99f;
+  font-size: 0.8rem;
+}
+
+.restaurant__meta {
+  margin-top: 0.6rem;
+  color: #aaa99f;
+  font-size: 0.85rem;
+}
+
+.filter-menu {
+  border: 1px solid #30352f;
+  background: #1b1e1a;
+}
+
+.filter-menu summary {
+  color: #f5eee2;
+}
+
+.filter-menu p:last-child {
+  color: #d4a66c;
+}
+
+.filter-menu form {
+  border-top: 1px solid #30352f;
+  background: #1b1e1a;
+}
+
+.filter-menu label {
+  color: #c6c1b6;
+}
+
+.filter-menu select {
+  color: #f5eee2;
+  background: #1b1e1a;
+  border-color: #55594e;
+}
+
+.tags span {
+  background: #503923;
+}
+
+.empty-catalog {
+  padding: 4rem 1rem;
+  border: 1px dashed #45483d;
+  border-radius: 0.75rem;
+  color: #c6c1b6;
+  text-align: center;
+}
+
+.empty-catalog__icon {
+  margin-bottom: 0.75rem;
+  font-size: 2rem;
+}
+
+.empty-catalog h3 {
+  margin-bottom: 0.5rem;
+  color: #fff7e9;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.img__section {
+  height: min(520px, 65vh);
+  min-height: 360px;
+  background: #20231f;
+}
+
+.detail-cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  overflow: hidden;
+  padding: 2rem;
+  color: #fff3df;
+  background: linear-gradient(145deg, #242b27, #523b2c 55%, #171916);
+  text-align: center;
+  isolation: isolate;
+}
+
+.detail-cover strong {
+  max-width: 50rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 50%);
+}
+
+.detail-cover span {
+  color: #e5c59c;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.details__container {
+  background: linear-gradient(0deg, rgb(14 16 14 / 94%), transparent);
+}
+
+.details {
+  padding: 2rem;
+}
+
+.details h2 {
+  color: #fff7e9;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.reviews .review__item {
+  border-color: #30352f;
+  color: #e8e2d8;
+}
+
+.reviews time {
+  color: #aaa99f;
+}
+
+@media (max-width: 600px) {
+  .catalog-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .book-cover {
+    height: 280px;
+  }
+
+  .profile p {
+    display: none;
   }
 }

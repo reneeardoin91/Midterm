@@ -1,4 +1,4 @@
-// This component shows restaurant metadata, and offers some actions to the user like uploading a new restaurant image, and adding a review.
+// This component shows book metadata and offers image-upload and review actions.
 
 import React from "react";
 import renderStars from "@/src/components/Stars.jsx";
@@ -13,12 +13,20 @@ const RestaurantDetails = ({
 }) => {
   return (
     <section className="img__section">
-      <img src={restaurant.photo} alt={restaurant.name} />
+      {restaurant.photo ? (
+        <img src={restaurant.photo} alt={`Cover for ${restaurant.name}`} />
+      ) : (
+        <div className={`detail-cover detail-cover--${restaurant.price || 1}`}>
+          <span>Dungeon Crawler Carl</span>
+          <strong>{restaurant.name}</strong>
+          <span>Matt Dinniman · Book {restaurant.price || 1}</span>
+        </div>
+      )}
 
       <div className="actions">
         {userId && (
           <img
-            alt="review"
+            alt="Write a book review"
             className="review"
             onClick={() => {
               setIsOpen(!isOpen);
@@ -53,9 +61,9 @@ const RestaurantDetails = ({
           </div>
 
           <p>
-            {restaurant.category} | {restaurant.city}
+            {restaurant.category || "LitRPG · Fantasy"} · Book{" "}
+            {restaurant.price || 1}
           </p>
-          <p>{"$".repeat(restaurant.price)}</p>
           {children}
         </div>
       </div>

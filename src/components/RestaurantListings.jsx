@@ -1,7 +1,6 @@
 "use client";
 
-// This components handles the restaurant listings page
-// It receives data from src/app/page.jsx, such as the initial restaurants and search params from the URL
+// This component handles the book listings page and its URL-backed filters.
 
 import Link from "next/link";
 import { React, useState, useEffect } from "react";
@@ -10,48 +9,51 @@ import renderStars from "@/src/components/Stars.jsx";
 import { getRestaurantsSnapshot } from "@/src/lib/firebase/firestore.js";
 import Filters from "@/src/components/Filters.jsx";
 
-const RestaurantItem = ({ restaurant }) => (
-  <li key={restaurant.id}>
-    <Link href={`/restaurant/${restaurant.id}`}>
-      <ActiveResturant restaurant={restaurant} />
+const BookItem = ({ book }) => (
+  <li key={book.id}>
+    <Link href={`/book/${book.id}`}>
+      <ActiveBook book={book} />
     </Link>
   </li>
 );
 
-const ActiveResturant = ({ restaurant }) => (
+const ActiveBook = ({ book }) => (
   <div>
-    <ImageCover photo={restaurant.photo} name={restaurant.name} />
-    <ResturantDetails restaurant={restaurant} />
+    <BookCover book={book} />
+    <BookDetails book={book} />
   </div>
 );
 
-const ImageCover = ({ photo, name }) => (
-  <div className="image-cover">
-    <img src={photo} alt={name} />
+const BookCover = ({ book }) => (
+  <div className={`book-cover book-cover--${book.price || 1}`}>
+    {book.photo ? (
+      <img src={book.photo} alt={`Cover for ${book.name}`} />
+    ) : (
+      <div className="book-cover__art" aria-label={`Book ${book.price || 1}`}>
+        <span className="book-cover__series">Dungeon Crawler Carl</span>
+        <span className="book-cover__number">
+          {String(book.price || 1).padStart(2, "0")}
+        </span>
+        <span className="book-cover__title">{book.name}</span>
+        <span className="book-cover__author">Matt Dinniman</span>
+      </div>
+    )}
   </div>
 );
 
-const ResturantDetails = ({ restaurant }) => (
+const BookDetails = ({ book }) => (
   <div className="restaurant__details">
-    <h2>{restaurant.name}</h2>
-    <RestaurantRating restaurant={restaurant} />
-    <RestaurantMetadata restaurant={restaurant} />
+    <p className="book-details__eyebrow">Book {book.price || 1}</p>
+    <h2>{book.name}</h2>
+    <BookRating book={book} />
+    <p className="restaurant__meta">{book.category || "LitRPG · Fantasy"}</p>
   </div>
 );
 
-const RestaurantRating = ({ restaurant }) => (
+const BookRating = ({ book }) => (
   <div className="restaurant__rating">
-    <ul>{renderStars(restaurant.avgRating)}</ul>
-    <span>({restaurant.numRatings})</span>
-  </div>
-);
-
-const RestaurantMetadata = ({ restaurant }) => (
-  <div className="restaurant__meta">
-    <p>
-      {restaurant.category} | {restaurant.city}
-    </p>
-    <p>{"$".repeat(restaurant.price)}</p>
+    <ul>{renderStars(book.avgRating)}</ul>
+    <span>{book.numRatings || 0} reviews</span>
   </div>
 );
 
@@ -63,13 +65,12 @@ export default function RestaurantListings({
 
   // The initial filters are the search params from the URL, useful for when the user refreshes the page
   const initialFilters = {
-    city: searchParams.city || "",
     category: searchParams.category || "",
     price: searchParams.price || "",
     sort: searchParams.sort || "",
   };
 
-  const [restaurants, setRestaurants] = useState(initialRestaurants);
+  const [books, setBooks] = useState(initialRestaurants);
   const [filters, setFilters] = useState(initialFilters);
 
   useEffect(() => {
@@ -78,18 +79,35 @@ export default function RestaurantListings({
 
   useEffect(() => {
     return getRestaurantsSnapshot((data) => {
-      setRestaurants(data);
+      setBooks(data);
     }, filters);
   }, [filters]);
 
   return (
     <article>
+      <div className="catalog-heading">
+        <div>
+          <p className="catalog-heading__eyebrow">The series</p>
+          <h2>Choose your next floor</h2>
+        </div>
+        <p>Eight books. One very strange apocalypse.</p>
+      </div>
       <Filters filters={filters} setFilters={setFilters} />
-      <ul className="restaurants">
-        {restaurants.map((restaurant) => (
-          <RestaurantItem key={restaurant.id} restaurant={restaurant} />
-        ))}
-      </ul>
+      {books.length ? (
+        <ul className="restaurants">
+          {books.map((book) => (
+            <BookItem key={book.id} book={book} />
+          ))}
+        </ul>
+      ) : (
+        <div className="empty-catalog">
+          <p className="empty-catalog__icon" aria-hidden="true">
+            📚
+          </p>
+          <h3>No books on this floor yet.</h3>
+          <p>Sign in and choose “Add sample books” from the profile menu.</p>
+        </div>
+      )}
     </article>
   );
 }

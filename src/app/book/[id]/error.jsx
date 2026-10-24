@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-export default function Error({ error, reset }) {
+export default function BookError({ error, reset }) {
   useEffect(() => {
     console.error(error);
   }, [error]);

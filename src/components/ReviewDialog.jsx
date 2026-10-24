@@ -56,7 +56,7 @@ const ReviewDialog = ({
       >
         {/* Identify the purpose of this form to the user. */}
         <header>
-          <h3>Add your review</h3>
+          <h3>Review this book</h3>
         </header>
         {/* Collect a rating and text, along with IDs required by the server. */}
         <article>
@@ -69,14 +69,14 @@ const ReviewDialog = ({
               type="text"
               name="text"
               id="review"
-              placeholder="Write your thoughts here"
+              placeholder="Share your thoughts on this book"
               required
               value={review.text}
               onChange={(e) => onChange(e.target.value, "text")}
             />
           </p>
 
-          {/* Include the target restaurant and author in the submitted data. */}
+          {/* Include the target book and author in the submitted data. */}
           <input type="hidden" name="restaurantId" value={id} />
           <input type="hidden" name="userId" value={userId} />
         </article>

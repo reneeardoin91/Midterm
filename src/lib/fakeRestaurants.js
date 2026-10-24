@@ -1,78 +1,58 @@
-import {
-  randomNumberBetween,
-  getRandomDateAfter,
-  getRandomDateBefore,
-} from "@/src/lib/utils.js";
-import { randomData } from "@/src/lib/randomData.js";
-
+import { getRandomDateAfter, getRandomDateBefore } from "@/src/lib/utils.js";
 import { Timestamp } from "firebase/firestore";
 
+const books = [
+  { name: "Dungeon Crawler Carl", genre: "LitRPG" },
+  { name: "Carl's Doomsday Scenario", genre: "Dark Comedy" },
+  { name: "The Dungeon Anarchist's Cookbook", genre: "Fantasy" },
+  { name: "The Gate of the Feral Gods", genre: "Science Fiction" },
+  { name: "The Butcher's Masquerade", genre: "LitRPG" },
+  { name: "The Eye of the Bedlam Bride", genre: "Dark Comedy" },
+  { name: "This Inevitable Ruin", genre: "Fantasy" },
+  { name: "A Parade of Horribles", genre: "Science Fiction" },
+];
+
+const sampleReviews = [
+  {
+    rating: 5,
+    text: "A wildly entertaining installment with clever dungeon challenges and a great sense of momentum.",
+  },
+  {
+    rating: 4,
+    text: "Funny, chaotic, and surprisingly heartfelt. I wanted to keep reading.",
+  },
+  {
+    rating: 5,
+    text: "The mix of game-like progression, sharp humor, and memorable characters works so well.",
+  },
+];
+
 export async function generateFakeRestaurantsAndReviews() {
-  const restaurantsToAdd = 5;
-  const data = [];
+  return books.map((book, index) => {
+    const bookTimestamp = Timestamp.fromDate(getRandomDateBefore());
+    const ratingsData = sampleReviews.map((review, reviewIndex) => ({
+      ...review,
+      userId: `Sample Reader ${reviewIndex + 1}`,
+      timestamp: Timestamp.fromDate(getRandomDateAfter(bookTimestamp.toDate())),
+    }));
+    const sumRating = ratingsData.reduce(
+      (sum, review) => sum + review.rating,
+      0
+    );
 
-  for (let i = 0; i < restaurantsToAdd; i++) {
-    const restaurantTimestamp = Timestamp.fromDate(getRandomDateBefore());
-
-    const ratingsData = [];
-
-    // Generate a random number of ratings/reviews for this restaurant
-    for (let j = 0; j < randomNumberBetween(0, 5); j++) {
-      const ratingTimestamp = Timestamp.fromDate(
-        getRandomDateAfter(restaurantTimestamp.toDate())
-      );
-
-      const ratingData = {
-        rating:
-          randomData.restaurantReviews[
-            randomNumberBetween(0, randomData.restaurantReviews.length - 1)
-          ].rating,
-        text: randomData.restaurantReviews[
-          randomNumberBetween(0, randomData.restaurantReviews.length - 1)
-        ].text,
-        userId: `User #${randomNumberBetween()}`,
-        timestamp: ratingTimestamp,
-      };
-
-      ratingsData.push(ratingData);
-    }
-
-    const avgRating = ratingsData.length
-      ? ratingsData.reduce(
-          (accumulator, currentValue) => accumulator + currentValue.rating,
-          0
-        ) / ratingsData.length
-      : 0;
-
-    const restaurantData = {
-      category:
-        randomData.restaurantCategories[
-          randomNumberBetween(0, randomData.restaurantCategories.length - 1)
-        ],
-      name: randomData.restaurantNames[
-        randomNumberBetween(0, randomData.restaurantNames.length - 1)
-      ],
-      avgRating,
-      city: randomData.restaurantCities[
-        randomNumberBetween(0, randomData.restaurantCities.length - 1)
-      ],
-      numRatings: ratingsData.length,
-      sumRating: ratingsData.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.rating,
-        0
-      ),
-      price: randomNumberBetween(1, 4),
-      photo: `https://storage.googleapis.com/firestorequickstarts.appspot.com/food_${randomNumberBetween(
-        1,
-        22
-      )}.png`,
-      timestamp: restaurantTimestamp,
-    };
-
-    data.push({
-      restaurantData,
+    return {
+      restaurantData: {
+        type: "book",
+        name: book.name,
+        category: book.genre,
+        price: index + 1,
+        avgRating: sumRating / ratingsData.length,
+        numRatings: ratingsData.length,
+        sumRating,
+        photo: "",
+        timestamp: bookTimestamp,
+      },
       ratingsData,
-    });
-  }
-  return data;
+    };
+  });
 }

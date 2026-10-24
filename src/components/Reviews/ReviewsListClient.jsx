@@ -32,7 +32,7 @@ export default function ReviewsListClient({
           </ul>
         ) : (
           <p>
-            This restaurant has not been reviewed yet,{" "}
+            This book has not been reviewed yet,{" "}
             {!userId ? "first login and then" : ""} add your own review!
           </p>
         )}

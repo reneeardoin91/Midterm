@@ -1,4 +1,4 @@
-// The filters shown on the restaurant listings page
+// The filters shown on the book listings page.
 
 import Tag from "@/src/components/Tag.jsx";
 
@@ -38,7 +38,7 @@ export default function Filters({ filters, setFilters }) {
         <summary>
           <img src="/filter.svg" alt="filter" />
           <div>
-            <p>Restaurants</p>
+            <p>Dungeon Crawler Carl</p>
             <p>Sorted by {filters.sort || "Rating"}</p>
           </div>
         </summary>
@@ -51,63 +51,32 @@ export default function Filters({ filters, setFilters }) {
           }}
         >
           <FilterSelect
-            label="Category"
+            label="Genre"
             options={[
               "",
-              "Italian",
-              "Chinese",
-              "Japanese",
-              "Mexican",
-              "Indian",
-              "Mediterranean",
-              "Caribbean",
-              "Cajun",
-              "German",
-              "Russian",
-              "Cuban",
-              "Organic",
-              "Tapas",
+              "LitRPG",
+              "Fantasy",
+              "Science Fiction",
+              "Dark Comedy",
             ]}
             value={filters.category}
             onChange={(event) => handleSelectionChange(event, "category")}
             name="category"
-            icon="/food.svg"
+            icon="/book.svg"
           />
 
           <FilterSelect
-            label="City"
-            options={[
-              "",
-              "New York",
-              "Los Angeles",
-              "London",
-              "Paris",
-              "Tokyo",
-              "Mumbai",
-              "Dubai",
-              "Amsterdam",
-              "Seoul",
-              "Singapore",
-              "Istanbul",
-            ]}
-            value={filters.city}
-            onChange={(event) => handleSelectionChange(event, "city")}
-            name="city"
-            icon="/location.svg"
-          />
-
-          <FilterSelect
-            label="Price"
-            options={["", "$", "$$", "$$$", "$$$$"]}
+            label="Book number"
+            options={["", "1", "2", "3", "4", "5", "6", "7", "8"]}
             value={filters.price}
             onChange={(event) => handleSelectionChange(event, "price")}
-            name="price"
-            icon="/price.svg"
+            name="book"
+            icon="/book.svg"
           />
 
           <FilterSelect
             label="Sort"
-            options={["Rating", "Review"]}
+            options={["Rating", "Most Reviewed"]}
             value={filters.sort}
             onChange={(event) => handleSelectionChange(event, "sort")}
             name="sort"
@@ -121,7 +90,6 @@ export default function Filters({ filters, setFilters }) {
                 type="reset"
                 onClick={() => {
                   setFilters({
-                    city: "",
                     category: "",
                     price: "",
                     sort: "",

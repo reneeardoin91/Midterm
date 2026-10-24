@@ -2,14 +2,14 @@
 import { googleAI } from "@genkit-ai/google-genai";
 // Import Genkit's function for configuring an AI generation instance.
 import { genkit } from "genkit";
-// Import the Firestore helper that retrieves a restaurant's reviews.
+// Import the Firestore helper that retrieves a book's reviews.
 import { getReviewsByRestaurantId } from "@/src/lib/firebase/firestore.js";
 // Import the authenticated server-side Firebase app for the current request.
 import { getAuthenticatedAppForUser } from "@/src/lib/firebase/serverApp";
 // Import the Firestore factory used with the authenticated Firebase app.
 import { getFirestore } from "firebase/firestore";
 
-// Fetch restaurant reviews and generate an AI-written one-sentence summary.
+// Fetch book reviews and generate an AI-written one-sentence summary.
 export async function GeminiSummary({ restaurantId }) {
   // Get the Firebase app associated with the current authenticated user.
   const { firebaseServerApp } = await getAuthenticatedAppForUser();
@@ -23,9 +23,9 @@ export async function GeminiSummary({ restaurantId }) {
   const reviewSeparator = "@";
   // Ask the model to summarize the text of every review in one sentence.
   const prompt = `
-    Based on the following restaurant reviews, 
+    Based on the following Dungeon Crawler Carl book reviews,
     where each review is separated by a '${reviewSeparator}' character, 
-    create a one-sentence summary of what people think of the restaurant. 
+    create a one-sentence summary of what readers think of the book.
 
     Here are the reviews: ${reviews.map((review) => review.text).join(reviewSeparator)}
   `;

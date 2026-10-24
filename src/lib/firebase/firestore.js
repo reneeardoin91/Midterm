@@ -84,47 +84,40 @@ export async function addReviewToRestaurant(db, restaurantId, review) {
     const docRef = doc(collection(db, "restaurants"), restaurantId);
     // Reserve a new document reference in the restaurant's ratings collection.
     const newRatingDocument = doc(
-      collection(db, `restaurants/${restaurantId}/ratings`),
+      collection(db, `restaurants/${restaurantId}/ratings`)
     );
 
     // Commit the review and aggregate changes together to keep them consistent.
     await runTransaction(db, (transaction) =>
-      updateWithRating(transaction, docRef, newRatingDocument, review),
+      updateWithRating(transaction, docRef, newRatingDocument, review)
     );
   } catch (error) {
     // Report the Firestore failure and allow callers to handle it as well.
     console.error(
       "There was an error adding the rating to the restaurant",
-      error,
+      error
     );
     throw error;
   }
 }
 
-// Apply any query filters for category, city, price, and sorting to a Firestore query.
-function applyQueryFilters(q, { category, city, price, sort }) {
-  // Add a category filter when a category value was provided.
+// Apply book genre, book number, and sorting filters to a Firestore query.
+function applyQueryFilters(q, { category, price, sort }) {
+  // Add a genre filter when a value was provided.
   if (category) {
-    // Keep only restaurants matching the requested category.
+    // Keep only books matching the requested genre.
     q = query(q, where("category", "==", category));
   }
-  // Add a city filter when a city value was provided.
-  if (city) {
-    // Keep only restaurants in the requested city.
-    q = query(q, where("city", "==", city));
-  }
-  // Add a price filter by checking the length of the price string.
+  // Add a book-number filter.
   if (price) {
-    // Match the numeric price tier represented by the dollar-sign string.
-    q = query(q, where("price", "==", price.length));
+    q = query(q, where("price", "==", Number(price)));
   }
   // Sort by average rating by default or when the user requests rating sorting.
   if (sort === "Rating" || !sort) {
-    // Put the highest-rated restaurants first.
+    // Put the highest-rated books first.
     q = query(q, orderBy("avgRating", "desc"));
-  } else if (sort === "Review") {
-    // Otherwise, sort by review count when the user requests review sorting.
-    // Put restaurants with the most reviews first.
+  } else if (sort === "Review" || sort === "Most Reviewed") {
+    // Otherwise, put books with the most reviews first.
     q = query(q, orderBy("numRatings", "desc"));
   }
   // Return the query with all selected filters applied.
@@ -141,15 +134,17 @@ export async function getRestaurants(db = db, filters = {}) {
   // Run the Firestore query and get the matching documents.
   const results = await getDocs(q);
   // Convert every Firestore document into a plain object with an ID and JavaScript Date timestamp.
-  return results.docs.map((doc) => {
-    // Combine each document ID and its stored restaurant data in the result.
-    return {
-      id: doc.id,
-      ...doc.data(),
-      // Convert the Firestore timestamp to a JavaScript Date so it can be passed to client components.
-      timestamp: doc.data().timestamp.toDate(),
-    };
-  });
+  return results.docs
+    .filter((doc) => doc.data().type === "book")
+    .map((doc) => {
+      // Combine each document ID and its stored restaurant data in the result.
+      return {
+        id: doc.id,
+        ...doc.data(),
+        // Convert the Firestore timestamp to a JavaScript Date so it can be passed to client components.
+        timestamp: doc.data().timestamp.toDate(),
+      };
+    });
 }
 
 // Create a live listener for restaurants that match the supplied filters.
@@ -168,15 +163,17 @@ export function getRestaurantsSnapshot(cb, filters = {}) {
   // Subscribe to snapshot updates for the restaurants query.
   return onSnapshot(q, (querySnapshot) => {
     // Map each matched document into a plain object with a converted timestamp.
-    const results = querySnapshot.docs.map((doc) => {
-      // Include the Firestore ID alongside each restaurant's data.
-      return {
-        id: doc.id,
-        ...doc.data(),
-        // Convert Firestore timestamps to JavaScript Date objects before returning data.
-        timestamp: doc.data().timestamp.toDate(),
-      };
-    });
+    const results = querySnapshot.docs
+      .filter((doc) => doc.data().type === "book")
+      .map((doc) => {
+        // Include the Firestore ID alongside each restaurant's data.
+        return {
+          id: doc.id,
+          ...doc.data(),
+          // Convert Firestore timestamps to JavaScript Date objects before returning data.
+          timestamp: doc.data().timestamp.toDate(),
+        };
+      });
 
     // Send the latest list to the provided callback.
     cb(results);

@@ -10,7 +10,7 @@ import {
   signOut,
   onIdTokenChanged,
 } from "@/src/lib/firebase/auth.js";
-// Import the helper that adds sample restaurant and review data to Firestore.
+// Import the helper that adds sample books and reviews to Firestore.
 import { addFakeRestaurantsAndReviews } from "@/src/lib/firebase/firestore.js";
 // Import the cookie helpers used to store and remove the Firebase session token.
 import { setCookie, deleteCookie } from "cookies-next";
@@ -62,12 +62,11 @@ export default function Header({ initialUser }) {
   // Return the header layout with a brand link and user actions.
   return (
     <header>
-      {/* Render the home page brand link with the Friendly Eats logo. */}
       <Link href="/" className="logo">
-        {/* Display the brand logo image. */}
-        <img src="/friendly-eats.svg" alt="FriendlyEats" />
-        {/* Display the brand text. */}
-        Friendly Eats
+        <span className="logo__mark" aria-hidden="true">
+          DCC
+        </span>
+        <span>Dungeon Crawler Carl</span>
       </Link>
       {/* If a user is signed in, show the profile menu; otherwise show the sign-in prompt. */}
       {user ? (
@@ -90,7 +89,7 @@ export default function Header({ initialUser }) {
 
                 <li>
                   <a href="#" onClick={addFakeRestaurantsAndReviews}>
-                    Add sample restaurants
+                    Add sample books
                   </a>
                 </li>
 

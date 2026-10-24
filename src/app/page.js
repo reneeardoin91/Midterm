@@ -22,6 +22,15 @@ export default async function Home(props) {
   );
   return (
     <main className="main__home">
+      <section className="home-hero">
+        <p className="home-hero__eyebrow">The review floor is now open</p>
+        <h1>Dungeon Crawler Carl</h1>
+        <p>
+          Soundbooth Theater presents: your reader-powered guide to every book
+          in the crawl. Rate a volume, share your take, and see what fellow
+          crawlers think.
+        </p>
+      </section>
       <RestaurantListings
         initialRestaurants={restaurants}
         searchParams={searchParams}
