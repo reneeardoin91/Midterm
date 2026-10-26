@@ -980,3 +980,157 @@ article {
     display: none;
   }
 }
+
+:root {
+  color-scheme: dark;
+  --page-background: #000;
+  --surface-background: #111;
+  --body-text: #ffe94a;
+  --heading-text: #ff4fa3;
+}
+
+body,
+.main__home,
+.main__restaurant {
+  color: var(--body-text);
+  background: var(--page-background);
+}
+
+header,
+.restaurants > li,
+.filter-menu,
+.filter-menu form,
+.filter-menu select,
+.menu ul,
+dialog,
+article {
+  color: var(--body-text);
+  background-color: var(--surface-background);
+}
+
+header {
+  background: var(--page-background);
+  border-bottom-color: #292929;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.catalog-heading h2,
+.restaurant__details h2,
+.details h2,
+.empty-catalog h3 {
+  color: var(--heading-text);
+}
+
+p,
+label,
+summary,
+.profile,
+.details,
+.reviews .review__item,
+.home-hero > p:last-child,
+.catalog-heading > p,
+.restaurant__meta,
+.restaurant__rating span,
+.restaurant__review_summary,
+.filter-menu label,
+.filter-menu summary,
+.filter-menu p:last-child,
+.empty-catalog,
+.reviews time {
+  color: var(--body-text);
+}
+
+a,
+.logo,
+header a,
+.restaurants a {
+  color: var(--body-text);
+}
+
+.logo__mark,
+.home-hero__eyebrow,
+.catalog-heading__eyebrow,
+.book-details__eyebrow {
+  color: var(--heading-text);
+}
+
+.home-hero {
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgb(255 79 163 / 12%),
+      transparent 60%
+    ),
+    var(--page-background);
+}
+
+.restaurants > li {
+  border-color: #333;
+}
+
+.restaurants > li:hover {
+  border-color: var(--heading-text);
+}
+
+.book-cover__title,
+.detail-cover strong {
+  color: var(--heading-text);
+}
+
+.book-cover__author,
+.detail-cover span {
+  color: var(--body-text);
+}
+
+.filter-menu {
+  border-color: #444;
+}
+
+.filter-menu select {
+  border-color: #666;
+}
+
+.tags span {
+  color: var(--body-text);
+  background-color: #24101b;
+}
+
+.tags button {
+  color: var(--heading-text);
+}
+
+.empty-catalog {
+  border-color: #555;
+}
+
+.reviews .review__item {
+  border-color: #333;
+}
+
+.reviews time {
+  color: var(--body-text);
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 85%);
+}
+
+dialog article {
+  background: var(--surface-background);
+}
+
+#review {
+  color: var(--body-text);
+  background: var(--page-background);
+  border-bottom-color: var(--heading-text);
+}
+
+footer .button--confirm {
+  color: var(--page-background);
+  background-color: var(--heading-text);
+}
